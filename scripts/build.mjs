@@ -14,7 +14,8 @@ await Promise.all([
   cp(resolve(root, 'styles.css'), resolve(dist, 'styles.css')),
   cp(resolve(root, 'src', 'game.js'), resolve(dist, 'game.js')),
   cp(resolve(root, 'src', 'roweb2.js'), resolve(dist, 'roweb2.js')),
-  cp(resolve(root, 'src', 'roweb3.js'), resolve(dist, 'roweb3.js'))
+  cp(resolve(root, 'src', 'roweb3.js'), resolve(dist, 'roweb3.js')),
+  cp(resolve(root, 'src', 'roweb4-addon.js'), resolve(dist, 'roweb4-addon.js'))
 ]);
 
-console.log('Roweb static build ready: visual v3 engine + v2/legacy fallbacks.');
+console.log('Roweb static build ready: v4 Sanctuary/audio/attributes addon + visual v3 engine.');
