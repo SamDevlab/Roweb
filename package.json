@@ -1,13 +1,13 @@
 {
   "name": "roweb",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "description": "MMORPG web prototype with original classic-MMO cleric art, Sanctuary, procedural audio, attributes, collisions and a coherent fantasy map.",
   "scripts": {
     "dev": "node tools/dev-server.mjs",
     "build": "npm run check && node scripts/build.mjs",
-    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check src/roweb2.js && node --check src/roweb3.js && node --check src/roweb3-ui-hotfix.js && node --check src/roweb6-art.js && node --check src/roweb7-art.js && node --check src/roweb8-player-fix.js && node --check src/roweb6-gameplay.js && node --check scripts/build.mjs"
+    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check src/roweb2.js && node --check src/roweb3.js && node --check src/roweb3-ui-hotfix.js && node --check src/roweb6-art.js && node --check src/roweb7-art.js && node --check src/roweb8-player-fix.js && node --check src/roweb9-novice-data.js && node --check src/roweb9-priest-data.js && node --check src/roweb9-high-data.js && node --check src/roweb6-gameplay.js && node --check scripts/build.mjs"
   },
   "engines": {
     "node": ">=18"
