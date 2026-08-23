@@ -19,7 +19,10 @@ await Promise.all([
   cp(resolve(root, 'src', 'roweb6-art.js'), resolve(dist, 'roweb6-art.js')),
   cp(resolve(root, 'src', 'roweb7-art.js'), resolve(dist, 'roweb7-art.js')),
   cp(resolve(root, 'src', 'roweb8-player-fix.js'), resolve(dist, 'roweb8-player-fix.js')),
+  cp(resolve(root, 'src', 'roweb9-novice-data.js'), resolve(dist, 'roweb9-novice-data.js')),
+  cp(resolve(root, 'src', 'roweb9-priest-data.js'), resolve(dist, 'roweb9-priest-data.js')),
+  cp(resolve(root, 'src', 'roweb9-high-data.js'), resolve(dist, 'roweb9-high-data.js')),
   cp(resolve(root, 'src', 'roweb6-gameplay.js'), resolve(dist, 'roweb6-gameplay.js'))
 ]);
 
-console.log('Roweb static build ready: v8 player fix + v7 map art + v6 Sanctuary/audio/attributes.');
+console.log('Roweb static build ready: concept-sheet player sprites + v7 map + v6 gameplay.');
