@@ -40,6 +40,18 @@
       <div id="quest-progress">Demônios purificados: 0 / 12</div>
     </section>
 
+    <section id="attr-panel" class="panel" aria-label="Atributos">
+      <div class="attr-head"><span class="eyebrow">ATRIBUTOS</span><b id="attr-points">Pontos: 0</b></div>
+      <div class="attr-grid">
+        <div><span>STR</span><b data-attr-value="str">1</b><button data-attr-plus="str" type="button">+</button></div>
+        <div><span>AGI</span><b data-attr-value="agi">1</b><button data-attr-plus="agi" type="button">+</button></div>
+        <div><span>VIT</span><b data-attr-value="vit">3</b><button data-attr-plus="vit" type="button">+</button></div>
+        <div><span>INT</span><b data-attr-value="int">5</b><button data-attr-plus="int" type="button">+</button></div>
+        <div><span>DEX</span><b data-attr-value="dex">4</b><button data-attr-plus="dex" type="button">+</button></div>
+        <div><span>LUK</span><b data-attr-value="luk">1</b><button data-attr-plus="luk" type="button">+</button></div>
+      </div>
+    </section>
+
     <section id="minimap-panel" class="panel">
       <canvas id="minimap" width="180" height="120"></canvas>
       <span>Vale da Catedral Caída</span>
@@ -51,7 +63,8 @@
       <button id="help-toggle" type="button">?</button>
       <div id="help-content" class="hidden">
         <strong>Controles</strong>
-        <p>WASD / setas: mover • Clique: mover/selecionar • Tab: próximo alvo • 1–5: habilidades • Espaço: ataque normal</p>
+        <p>WASD / setas: mover • Clique: mover/selecionar • Tab: próximo alvo • 1–6: habilidades • Espaço: ataque normal</p>
+        <p>STR: ataque • AGI: velocidade/esquiva • VIT: HP/defesa • INT: SP/poder sagrado • DEX: poder sagrado • LUK: críticos.</p>
       </div>
     </section>
 
@@ -61,10 +74,12 @@
       <button class="skill" data-skill="magnificat"><kbd>3</kbd><span class="skill-icon magnificat">✹</span><b>Magnificat</b><small>22 SP</small><i class="cooldown"></i></button>
       <button class="skill" data-skill="blessing"><kbd>4</kbd><span class="skill-icon blessing">✧</span><b>Benção</b><small>16 SP</small><i class="cooldown"></i></button>
       <button class="skill" data-skill="kyrie"><kbd>5</kbd><span class="skill-icon kyrie">◉</span><b>Kyrie</b><small>25 SP</small><i class="cooldown"></i></button>
+      <button class="skill" data-skill="sanctuary"><kbd>6</kbd><span class="skill-icon sanctuary">✠</span><b>Santuário</b><small>34 SP</small><i class="cooldown"></i></button>
     </section>
 
     <div id="toast" class="hidden"></div>
   </main>
   <script defer src="/roweb3.js"></script>
+  <script defer src="/roweb4-addon.js"></script>
 </body>
 </html>
