@@ -23,7 +23,8 @@ function safePath(urlPath) {
   const clean = decodeURIComponent(urlPath.split('?')[0]);
   const aliases = {
     '/game.js': '/src/game.js',
-    '/roweb2.js': '/src/roweb2.js'
+    '/roweb2.js': '/src/roweb2.js',
+    '/roweb3.js': '/src/roweb3.js'
   };
   const requested = aliases[clean] || clean;
   const rel = normalize(requested).replace(/^([/\\])+/, '');
