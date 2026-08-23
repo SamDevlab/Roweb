@@ -25,6 +25,7 @@ function safePath(urlPath) {
     '/game.js': '/src/game.js',
     '/roweb2.js': '/src/roweb2.js',
     '/roweb3.js': '/src/roweb3.js',
+    '/roweb3-ui-hotfix.js': '/src/roweb3-ui-hotfix.js',
     '/roweb4-addon.js': '/src/roweb4-addon.js',
     '/roweb5-sprites.js': '/src/roweb5-sprites.js'
   };
