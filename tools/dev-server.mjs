@@ -21,7 +21,11 @@ const mime = {
 
 function safePath(urlPath) {
   const clean = decodeURIComponent(urlPath.split('?')[0]);
-  const requested = clean === '/game.js' ? '/src/game.js' : clean;
+  const aliases = {
+    '/game.js': '/src/game.js',
+    '/roweb2.js': '/src/roweb2.js'
+  };
+  const requested = aliases[clean] || clean;
   const rel = normalize(requested).replace(/^([/\\])+/, '');
   const full = join(root, rel || 'index.html');
   return full.startsWith(root) ? full : null;
