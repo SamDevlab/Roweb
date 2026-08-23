@@ -25,7 +25,8 @@ function safePath(urlPath) {
     '/game.js': '/src/game.js',
     '/roweb2.js': '/src/roweb2.js',
     '/roweb3.js': '/src/roweb3.js',
-    '/roweb4-addon.js': '/src/roweb4-addon.js'
+    '/roweb4-addon.js': '/src/roweb4-addon.js',
+    '/roweb5-sprites.js': '/src/roweb5-sprites.js'
   };
   const requested = aliases[clean] || clean;
   const rel = normalize(requested).replace(/^([/\\])+/, '');
