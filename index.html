@@ -14,10 +14,7 @@
     <section id="top-hud" class="panel hud-panel">
       <div class="identity">
         <div class="portrait">✦</div>
-        <div>
-          <strong id="player-name">Noviço</strong>
-          <div id="class-label">Noviço • Nv. 1</div>
-        </div>
+        <div><strong id="player-name">Noviço</strong><div id="class-label">Noviço • Nv. 1</div></div>
       </div>
       <div class="resource-bars">
         <div class="resource-line"><span>HP</span><div class="bar hp"><i id="hp-fill"></i></div><b id="hp-text"></b></div>
@@ -26,19 +23,9 @@
       </div>
     </section>
 
-    <section id="target-panel" class="panel hidden">
-      <span class="eyebrow">ALVO DEMÔNIO</span>
-      <strong id="target-name">—</strong>
-      <div class="bar enemy"><i id="target-hp-fill"></i></div>
-      <small id="target-hp-text"></small>
-    </section>
+    <section id="target-panel" class="panel hidden"><span class="eyebrow">ALVO DEMÔNIO</span><strong id="target-name">—</strong><div class="bar enemy"><i id="target-hp-fill"></i></div><small id="target-hp-text"></small></section>
 
-    <section id="quest-panel" class="panel">
-      <span class="eyebrow">MISSÃO DO MAPA</span>
-      <strong>Purificação do Vale</strong>
-      <p>Derrote demônios e encontre o Poring Demoníaco.</p>
-      <div id="quest-progress">Demônios purificados: 0 / 12</div>
-    </section>
+    <section id="quest-panel" class="panel"><span class="eyebrow">MISSÃO DO MAPA</span><strong>Purificação do Vale</strong><p>Derrote demônios e encontre o Poring Demoníaco.</p><div id="quest-progress">Demônios purificados: 0 / 12</div></section>
 
     <section id="attr-panel" class="panel" aria-label="Atributos">
       <div class="attr-head"><span class="eyebrow">ATRIBUTOS</span><b id="attr-points">Pontos: 0</b></div>
@@ -52,20 +39,12 @@
       </div>
     </section>
 
-    <section id="minimap-panel" class="panel">
-      <canvas id="minimap" width="180" height="120"></canvas>
-      <span>Vale da Catedral Caída</span>
-    </section>
-
+    <section id="minimap-panel" class="panel"><canvas id="minimap" width="180" height="120"></canvas><span>Vale da Catedral Caída</span></section>
     <section id="battle-log" class="panel" aria-live="polite"></section>
 
     <section id="help-panel" class="panel">
       <button id="help-toggle" type="button">?</button>
-      <div id="help-content" class="hidden">
-        <strong>Controles</strong>
-        <p>WASD / setas: mover • Clique: mover/selecionar • Tab: próximo alvo • 1–6: habilidades • Espaço: ataque normal</p>
-        <p>STR: ataque • AGI: velocidade/esquiva • VIT: HP/defesa • INT: SP/poder sagrado • DEX: poder sagrado • LUK: críticos.</p>
-      </div>
+      <div id="help-content" class="hidden"><strong>Controles</strong><p>WASD / setas: mover • Clique: mover/selecionar • Tab: próximo alvo • 1–6: habilidades • Espaço: ataque normal</p><p>STR: ataque • AGI: velocidade/esquiva • VIT: HP/defesa • INT: SP/poder sagrado • DEX: poder sagrado • LUK: críticos.</p></div>
     </section>
 
     <section id="hotbar" aria-label="Habilidades">
@@ -79,6 +58,16 @@
 
     <div id="toast" class="hidden"></div>
   </main>
+  <script>
+    try {
+      const save = JSON.parse(localStorage.getItem('roweb-save') || '{}');
+      if (!save.attributes) {
+        const level = Math.max(1, Number(save.level) || 1);
+        save.attributes = { str: 1, agi: 1, vit: 3, int: 5, dex: 4, luk: 1, points: (level - 1) * 3 };
+        localStorage.setItem('roweb-save', JSON.stringify(save));
+      }
+    } catch {}
+  </script>
   <script defer src="/roweb3.js"></script>
   <script defer src="/roweb4-addon.js"></script>
 </body>
