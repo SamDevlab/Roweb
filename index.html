@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#19162b" />
+  <title>Roweb — Vale da Catedral Caída</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="game" aria-label="Roweb MMORPG"></canvas>
+
+    <section id="top-hud" class="panel hud-panel">
+      <div class="identity">
+        <div class="portrait">✦</div>
+        <div>
+          <strong id="player-name">Noviço</strong>
+          <div id="class-label">Noviço • Nv. 1</div>
+        </div>
+      </div>
+      <div class="resource-bars">
+        <div class="resource-line"><span>HP</span><div class="bar hp"><i id="hp-fill"></i></div><b id="hp-text"></b></div>
+        <div class="resource-line"><span>SP</span><div class="bar sp"><i id="sp-fill"></i></div><b id="sp-text"></b></div>
+        <div class="resource-line"><span>XP</span><div class="bar xp"><i id="xp-fill"></i></div><b id="xp-text"></b></div>
+      </div>
+    </section>
+
+    <section id="target-panel" class="panel hidden">
+      <span class="eyebrow">ALVO DEMÔNIO</span>
+      <strong id="target-name">—</strong>
+      <div class="bar enemy"><i id="target-hp-fill"></i></div>
+      <small id="target-hp-text"></small>
+    </section>
+
+    <section id="quest-panel" class="panel">
+      <span class="eyebrow">MISSÃO DO MAPA</span>
+      <strong>Purificação do Vale</strong>
+      <p>Derrote demônios e encontre o Poring Demoníaco.</p>
+      <div id="quest-progress">Demônios purificados: 0 / 12</div>
+    </section>
+
+    <section id="minimap-panel" class="panel">
+      <canvas id="minimap" width="180" height="120"></canvas>
+      <span>Vale da Catedral Caída</span>
+    </section>
+
+    <section id="battle-log" class="panel" aria-live="polite"></section>
+
+    <section id="help-panel" class="panel">
+      <button id="help-toggle" type="button">?</button>
+      <div id="help-content" class="hidden">
+        <strong>Controles</strong>
+        <p>WASD / setas: mover • Clique: mover/selecionar • Tab: próximo alvo • 1–5: habilidades • Espaço: ataque normal</p>
+      </div>
+    </section>
+
+    <section id="hotbar" aria-label="Habilidades">
+      <button class="skill" data-skill="normal"><kbd>1</kbd><span class="skill-icon normal">⚔</span><b>Ataque</b><small>0 SP</small><i class="cooldown"></i></button>
+      <button class="skill" data-skill="heal"><kbd>2</kbd><span class="skill-icon heal">✚</span><b>Cura</b><small>10 SP</small><i class="cooldown"></i></button>
+      <button class="skill" data-skill="magnificat"><kbd>3</kbd><span class="skill-icon magnificat">✹</span><b>Magnificat</b><small>22 SP</small><i class="cooldown"></i></button>
+      <button class="skill" data-skill="blessing"><kbd>4</kbd><span class="skill-icon blessing">✧</span><b>Benção</b><small>16 SP</small><i class="cooldown"></i></button>
+      <button class="skill" data-skill="kyrie"><kbd>5</kbd><span class="skill-icon kyrie">◉</span><b>Kyrie</b><small>25 SP</small><i class="cooldown"></i></button>
+    </section>
+
+    <div id="toast" class="hidden"></div>
+  </main>
+  <script type="module" src="./src/game.js"></script>
+</body>
+</html>
