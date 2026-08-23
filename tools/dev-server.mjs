@@ -13,6 +13,9 @@ const wss = new WebSocketServer({ server });
 const PORT = Number(process.env.PORT || 4173);
 const players = new Map();
 
+// Keep the browser path identical to production while preserving src/game.js
+// as the development source of truth.
+app.get('/game.js', (_req, res) => res.type('application/javascript').sendFile(join(root, 'src', 'game.js')));
 app.use(express.static(root, { extensions: ['html'] }));
 app.get('/health', (_req, res) => res.json({ ok: true, players: players.size }));
 app.use((_req, res) => res.sendFile(join(root, 'index.html')));
