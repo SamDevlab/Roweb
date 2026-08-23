@@ -11,7 +11,7 @@ button, kbd { font: inherit; }
 button { color: inherit; }
 
 #game-shell { position: relative; width: 100vw; height: 100vh; overflow: hidden; isolation: isolate; }
-#game { display: block; width: 100%; height: 100%; background: #1d2430; cursor: crosshair; }
+#game { display: block; width: 100%; height: 100%; background: #1d2430; cursor: crosshair; image-rendering: pixelated; image-rendering: crisp-edges; }
 .panel {
   position: absolute;
   border: 1px solid rgba(232, 219, 255, .17);
@@ -49,8 +49,20 @@ button { color: inherit; }
 #quest-panel p { margin: 5px 0 8px; color: #aaa8b7; line-height: 1.35; font-size: 11px; }
 #quest-progress { font-size: 10px; color: #f2d98b; }
 
+#attr-panel { left: 18px; top: 112px; width: 208px; padding: 10px 11px; }
+.attr-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.attr-head .eyebrow { margin: 0; }
+#attr-points { font-size: 9px; color: #f2d98b; }
+.attr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 7px; margin-top: 8px; }
+.attr-grid > div { display: grid; grid-template-columns: 28px 1fr 20px; align-items: center; gap: 4px; min-height: 24px; padding: 3px 4px; border-radius: 6px; background: rgba(255,255,255,.035); }
+.attr-grid span { font-size: 8px; font-weight: 900; color: #d9d3e4; letter-spacing: .05em; }
+.attr-grid b { text-align: center; font-size: 10px; color: #fff0b1; }
+.attr-grid button { width: 20px; height: 20px; padding: 0; border: 1px solid rgba(255,255,255,.16); border-radius: 5px; background: rgba(100,84,135,.45); font-size: 13px; line-height: 1; cursor: pointer; }
+.attr-grid button:hover:not(:disabled) { border-color: rgba(255,235,170,.6); background: rgba(124,101,164,.6); }
+.attr-grid button:disabled { opacity: .28; cursor: default; }
+
 #minimap-panel { right: 18px; bottom: 112px; width: 194px; padding: 7px; }
-#minimap { display: block; width: 180px; height: 120px; border-radius: 9px; background: #111822; }
+#minimap { display: block; width: 180px; height: 120px; border-radius: 9px; background: #111822; image-rendering: pixelated; }
 #minimap-panel span { display: block; margin-top: 5px; color: #beb9ca; text-align: center; font-size: 9px; letter-spacing: .04em; }
 
 #battle-log { left: 18px; bottom: 112px; width: min(430px, calc(100vw - 36px)); min-height: 52px; max-height: 112px; overflow: hidden; padding: 10px 12px; font-size: 10px; line-height: 1.55; color: #c9c5d2; }
@@ -58,7 +70,7 @@ button { color: inherit; }
 
 #help-panel { right: 18px; top: 190px; background: transparent; border: 0; box-shadow: none; }
 #help-toggle { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(18,16,31,.8); cursor: pointer; }
-#help-content { position: absolute; right: 0; top: 40px; width: 260px; padding: 12px; border-radius: 12px; background: rgba(15,14,25,.92); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+#help-content { position: absolute; right: 0; top: 40px; width: 280px; padding: 12px; border-radius: 12px; background: rgba(15,14,25,.92); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 12px 30px rgba(0,0,0,.3); }
 #help-content strong { font-size: 12px; }
 #help-content p { margin: 6px 0 0; color: #b8b3c3; font-size: 10px; line-height: 1.5; }
 
@@ -68,7 +80,7 @@ button { color: inherit; }
 .skill:active { transform: translateY(1px); }
 .skill kbd { position: absolute; top: 4px; left: 5px; width: 17px; height: 17px; display: grid; place-items: center; border-radius: 5px; background: rgba(0,0,0,.33); color: #b7b2c3; font-size: 9px; border: 0; }
 .skill-icon { font-size: 23px; line-height: 1; text-shadow: 0 0 12px currentColor; }
-.skill-icon.normal { color: #dadce3; } .skill-icon.heal { color: #9ff7d2; } .skill-icon.magnificat { color: #ffe9a6; } .skill-icon.blessing { color: #c8adff; } .skill-icon.kyrie { color: #8dd9ff; }
+.skill-icon.normal { color: #dadce3; } .skill-icon.heal { color: #9ff7d2; } .skill-icon.magnificat { color: #ffe9a6; } .skill-icon.blessing { color: #c8adff; } .skill-icon.kyrie { color: #8dd9ff; } .skill-icon.sanctuary { color: #e8ffad; }
 .skill b { font-size: 9px; font-weight: 800; }
 .skill small { font-size: 8px; color: #aaa6b5; }
 .cooldown { position: absolute; inset: 0; transform-origin: bottom; transform: scaleY(0); background: rgba(4,4,10,.64); pointer-events: none; }
@@ -78,11 +90,12 @@ button { color: inherit; }
 
 @media (max-width: 760px) {
   #top-hud { width: calc(100% - 36px); }
-  #quest-panel { display: none; }
+  #quest-panel, #attr-panel { display: none; }
   #minimap-panel { display: none; }
   #target-panel { top: 105px; }
   #battle-log { bottom: 104px; }
   #hotbar { bottom: 12px; gap: 3px; padding: 5px; width: calc(100% - 16px); justify-content: center; }
-  .skill { width: min(74px, 19vw); height: 70px; }
+  .skill { width: min(64px, 15.5vw); height: 70px; }
   .skill small { display: none; }
+  .skill b { font-size: 8px; }
 }
