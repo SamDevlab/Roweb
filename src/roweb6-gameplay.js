@@ -94,7 +94,7 @@
     if(!sanctuaries.length)return;
     const cell=26,total=cell*5;
     for(const s of sanctuaries){
-      const age=(now-s.born)/s.life,fade=Math.min(1,(now-s.born)/420)*Math.min(1,(s.life-(now-s.born))/650);
+      const fade=Math.min(1,(now-s.born)/420)*Math.min(1,(s.life-(now-s.born))/650);
       ctx.save();ctx.globalAlpha=.24*fade;
       const glow=ctx.createRadialGradient(s.x,s.y,8,s.x,s.y,92);glow.addColorStop(0,'rgba(235,255,218,.48)');glow.addColorStop(.65,'rgba(181,246,185,.18)');glow.addColorStop(1,'rgba(181,246,185,0)');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(s.x,s.y,92,0,TAU);ctx.fill();
       for(let gy=-2;gy<=2;gy++)for(let gx=-2;gx<=2;gx++){
@@ -111,7 +111,6 @@
     for(const s of sanctuaries){
       const fade=Math.min(1,(now-s.born)/420)*Math.min(1,(s.life-(now-s.born))/650),pulse=.5+.5*Math.sin(now/180+s.seed);
       ctx.save();
-      // Narrow translucent pillars mimic the classic Sanctuary columns without covering the sprites.
       for(let i=0;i<5;i++){
         const gx=((i*2+Math.floor(now/900))%5)-2,x=s.x+gx*26,top=s.y-100-(i%2)*10;
         const grad=ctx.createLinearGradient(x,top,x,s.y+38);grad.addColorStop(0,'rgba(247,255,226,0)');grad.addColorStop(.35,`rgba(235,255,221,${.05*fade})`);grad.addColorStop(1,'rgba(211,250,206,0)');ctx.fillStyle=grad;ctx.fillRect(x-5,top,10,s.y+38-top);
@@ -126,7 +125,6 @@
   const baseUpdateEffects=updateEffects;
   updateEffects=function(dt){updateSanctuaries();baseUpdateEffects(dt);};
 
-  // Sanctuary is integrated into the world render: floor below actors, light above effects.
   drawWorld=function(){
     ctx.clearRect(0,0,innerWidth,innerHeight);ctx.save();ctx.translate(-camera.x,-camera.y);drawGround();drawSanctuaryFloor();
     const depth=scenery.map(s=>({y:s.y+(s.type==='tree'?35:0),kind:'scene',v:s}))
@@ -155,8 +153,6 @@
   setInterval(updateAttributeUI,250);updateAttributeUI();
 
   addEventListener('keydown',e=>{if(e.key==='6'){try{audio();}catch{}cast('sanctuary');}});
-  const sanctuaryButton=document.querySelector('[data-skill="sanctuary"]');
-  if(sanctuaryButton)sanctuaryButton.addEventListener('click',()=>{try{audio();}catch{}cast('sanctuary');});
   document.addEventListener('pointerdown',()=>{try{audio();}catch{}},{once:true});
 
   log('Gameplay v6 ativo: Santuário integrado ao chão, sons e atributos preservados.','good');
