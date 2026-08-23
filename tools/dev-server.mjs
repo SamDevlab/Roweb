@@ -28,6 +28,10 @@ function safePath(urlPath) {
     '/roweb3-ui-hotfix.js': '/src/roweb3-ui-hotfix.js',
     '/roweb6-art.js': '/src/roweb6-art.js',
     '/roweb7-art.js': '/src/roweb7-art.js',
+    '/roweb8-player-fix.js': '/src/roweb8-player-fix.js',
+    '/roweb9-novice-data.js': '/src/roweb9-novice-data.js',
+    '/roweb9-priest-data.js': '/src/roweb9-priest-data.js',
+    '/roweb9-high-data.js': '/src/roweb9-high-data.js',
     '/roweb6-gameplay.js': '/src/roweb6-gameplay.js'
   };
   const requested = aliases[clean] || clean;
