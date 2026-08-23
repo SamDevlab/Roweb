@@ -1,13 +1,13 @@
 {
   "name": "roweb",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "MMORPG web prototype with an original procedural presentation.",
+  "description": "MMORPG web prototype with original 2D sprites, collisions and a procedural fantasy map.",
   "scripts": {
     "dev": "node tools/dev-server.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check scripts/build.mjs"
+    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check src/roweb2.js && node --check scripts/build.mjs"
   },
   "engines": {
     "node": ">=18"
