@@ -18,7 +18,8 @@ await Promise.all([
   cp(resolve(root, 'src', 'roweb3-ui-hotfix.js'), resolve(dist, 'roweb3-ui-hotfix.js')),
   cp(resolve(root, 'src', 'roweb6-art.js'), resolve(dist, 'roweb6-art.js')),
   cp(resolve(root, 'src', 'roweb7-art.js'), resolve(dist, 'roweb7-art.js')),
+  cp(resolve(root, 'src', 'roweb8-player-fix.js'), resolve(dist, 'roweb8-player-fix.js')),
   cp(resolve(root, 'src', 'roweb6-gameplay.js'), resolve(dist, 'roweb6-gameplay.js'))
 ]);
 
-console.log('Roweb static build ready: v7 art polish + v6 Sanctuary/audio/attributes on the v3 combat engine.');
+console.log('Roweb static build ready: v8 player fix + v7 map art + v6 Sanctuary/audio/attributes.');
