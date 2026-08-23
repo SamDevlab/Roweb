@@ -50,6 +50,16 @@
     }
   };
 
+  const baseDamageMob = damageMob;
+  damageMob = function (mob, amount, color = '#fff1a8', source = 'Dano sagrado') {
+    let mult = 1;
+    if (source === 'Ataque Normal') mult = 0.72 + physicalPower() / 34;
+    else if (source !== 'Santuário') mult = 0.72 + holyPower() / 38;
+    const crit = Math.random() < Math.min(.22, attributes.luk * .004) ? 1.5 : 1;
+    baseDamageMob(mob, amount * mult * crit, color, source);
+    if (crit > 1 && mob?.alive) floatingText(mob.x, mob.y - mob.radius - 38, 'CRIT!', '#fff0a8');
+  };
+
   function audio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -94,8 +104,9 @@
       playSkillSound('sanctuary');
       return;
     }
+    const before = skills[name]?.last;
     baseCast(name);
-    if (['normal','heal','magnificat','blessing','kyrie'].includes(name)) playSkillSound(name);
+    if (skills[name]?.last !== before && ['normal','heal','magnificat','blessing','kyrie'].includes(name)) playSkillSound(name);
   };
 
   function updateSanctuaries() {
