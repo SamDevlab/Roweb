@@ -13,8 +13,10 @@ Protótipo jogável de um RPG online-like inspirado no ritmo de MMORPGs clássic
 - Movimento por WASD/setas ou clique no mapa.
 - Seleção de alvo por clique ou `Tab`.
 - Hotkeys `1` a `5` para habilidades.
-- XP, níveis, evolução de classe, drops simples e respawn.
+- XP, níveis, evolução de classe e respawn.
 - HUD, minimapa, log de batalha, cooldowns, partículas e efeitos visuais procedurais.
+- Presença multiplayer via WebSocket: jogadores conectados ao mesmo servidor aparecem no mapa.
+- Modo solo continua funcionando caso o WebSocket não esteja disponível.
 
 ## Habilidades
 
@@ -43,13 +45,21 @@ npm install
 npm run dev
 ```
 
-Abra o endereço exibido pelo Vite.
+Depois, abra `http://localhost:4173` no navegador.
 
-Também é possível abrir `index.html` diretamente em um navegador moderno, embora o servidor de desenvolvimento seja recomendado.
+Para uma sessão multiplayer simples, basta abrir o mesmo endereço em dois navegadores ou dispositivos que consigam acessar o mesmo servidor.
+
+## Validação
+
+```bash
+npm run check
+```
+
+O comando valida a sintaxe do servidor e do cliente.
 
 ## Direção do projeto
 
-Esta primeira entrega é um **vertical slice** jogável no navegador. A arquitetura mantém o estado do mundo isolado do desenho para permitir adicionar posteriormente servidor autoritativo, WebSocket, contas, persistência, party, chat, loot/equipamentos e multiplayer real.
+Esta primeira entrega é um **vertical slice** jogável. O servidor atual sincroniza presença, posição, nível e classe dos jogadores. O combate e os monstros ainda são processados no cliente. A próxima evolução natural é tornar o servidor autoritativo para combate e mobs e depois adicionar contas, persistência, party, chat, loot/equipamentos e sincronização completa do mundo.
 
 ## Propriedade intelectual
 
