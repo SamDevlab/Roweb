@@ -16,8 +16,8 @@ await Promise.all([
   cp(resolve(root, 'src', 'roweb2.js'), resolve(dist, 'roweb2.js')),
   cp(resolve(root, 'src', 'roweb3.js'), resolve(dist, 'roweb3.js')),
   cp(resolve(root, 'src', 'roweb3-ui-hotfix.js'), resolve(dist, 'roweb3-ui-hotfix.js')),
-  cp(resolve(root, 'src', 'roweb4-addon.js'), resolve(dist, 'roweb4-addon.js')),
-  cp(resolve(root, 'src', 'roweb5-sprites.js'), resolve(dist, 'roweb5-sprites.js'))
+  cp(resolve(root, 'src', 'roweb6-art.js'), resolve(dist, 'roweb6-art.js')),
+  cp(resolve(root, 'src', 'roweb6-gameplay.js'), resolve(dist, 'roweb6-gameplay.js'))
 ]);
 
-console.log('Roweb static build ready: v5 sprite pack + HUD hotfix + v4 Sanctuary/audio/attributes + visual v3 engine.');
+console.log('Roweb static build ready: v6 art + Sanctuary/audio/attributes on the v3 combat engine.');
