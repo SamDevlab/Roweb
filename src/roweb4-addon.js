@@ -28,6 +28,18 @@
   };
   recalcStats(false);
 
+  const nativeStorageSetItem = Storage.prototype.setItem;
+  Storage.prototype.setItem = function (key, value) {
+    if (key === 'roweb-save') {
+      try {
+        const next = JSON.parse(value);
+        if (!next.attributes) next.attributes = { ...attributes };
+        value = JSON.stringify(next);
+      } catch {}
+    }
+    return nativeStorageSetItem.call(this, key, value);
+  };
+
   const basePersist = persist;
   persist = function () {
     localStorage.setItem('roweb-save', JSON.stringify({
