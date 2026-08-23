@@ -5,10 +5,9 @@
   "type": "module",
   "description": "MMORPG web prototype with an original procedural presentation.",
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node --watch server.mjs",
+    "dev": "node --watch tools/dev-server.mjs",
     "build": "node scripts/build.mjs",
-    "check": "node --check server.mjs && node --check src/game.js && node --check scripts/build.mjs"
+    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check scripts/build.mjs"
   },
   "dependencies": {
     "express": "^5.1.0",
