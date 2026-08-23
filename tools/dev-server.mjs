@@ -27,6 +27,7 @@ function safePath(urlPath) {
     '/roweb3.js': '/src/roweb3.js',
     '/roweb3-ui-hotfix.js': '/src/roweb3-ui-hotfix.js',
     '/roweb6-art.js': '/src/roweb6-art.js',
+    '/roweb7-art.js': '/src/roweb7-art.js',
     '/roweb6-gameplay.js': '/src/roweb6-gameplay.js'
   };
   const requested = aliases[clean] || clean;
