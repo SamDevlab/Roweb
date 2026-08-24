@@ -1,5 +1,5 @@
-// Roweb v11.1 character animation layer.
-// The concept-sheet sprites are loaded atomically before this layer takes ownership of drawPlayer.
+// Roweb v11.2 character animation layer.
+// Keeps every source sprite intact: movement uses whole-sprite transforms, never destructive slicing.
 (() => {
   const previousDrawPlayer = drawPlayer;
   const REQUIRED = [
@@ -8,17 +8,17 @@
     'high_front','high_side','high_back','high_cast'
   ];
   const images = new Map();
-  const walkFrames = new Map();
   let ready = false;
 
   const classKey = job => job === 'Sumo Sacerdote' ? 'high' : job === 'Sacerdote' ? 'priest' : 'novice';
-  const spriteHeight = job => job === 'Sumo Sacerdote' ? 99 : job === 'Sacerdote' ? 94 : 89;
+  const spriteHeight = job => job === 'Sumo Sacerdote' ? 101 : job === 'Sacerdote' ? 97 : 91;
   const skillColor = name => ({
     heal:'#a9ffe0', magnificat:'#ffe59c', blessing:'#e3c8ff',
     kyrie:'#bcecff', sanctuary:'#e9f7cf', normal:'#fff1ca'
   }[name] || '#f5ebc9');
 
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const groundY = p => p.y + p.radius + 12;
 
   async function waitForSpriteData(timeoutMs = 5000) {
     const deadline = performance.now() + timeoutMs;
@@ -46,53 +46,14 @@
       await waitForSpriteData();
       const loaded = await Promise.all(REQUIRED.map(async key => [key, await decodeImage(key, window.ROWEB9_SPRITE_DATA[key])]));
       for (const [key, im] of loaded) images.set(key, im);
-      buildWalkFrames();
       ready = true;
       installCastTracker();
       drawPlayer = drawCharacter;
-      log('Aster v11.1 ativo: sprites carregados, caminhada e conjuração corrigidas.','good');
+      log('Aster v11.2 ativo: sprite inteiro preservado, pés e caminhada corrigidos.','good');
     } catch (err) {
-      console.error('Falha ao preparar sprites do Aster v11.1', err);
-      // Keep the last complete renderer instead of replacing the player with a placeholder orb.
+      console.error('Falha ao preparar sprites do Aster v11.2', err);
       drawPlayer = previousDrawPlayer;
       log('Sprites animados não carregaram; mantendo o último personagem válido.');
-    }
-  }
-
-  function makeWalkFrame(im, dir, phase) {
-    const pad = 6, w = im.naturalWidth, h = im.naturalHeight;
-    const c = document.createElement('canvas');
-    c.width = w + pad * 2;
-    c.height = h + pad * 2;
-    const g = c.getContext('2d');
-    g.imageSmoothingEnabled = false;
-
-    const stride = [0, 1, 0, -1][phase];
-    const lift = [0, -1, 0, -1][phase];
-    const split = Math.floor(h * .67);
-    const lower = h - split;
-
-    // Upper body: subtle counter-motion.
-    g.drawImage(im, 0, 0, w, split, pad - stride, pad + lift, w, split);
-
-    if (dir === 'side') {
-      // Side walk: lower body advances/recedes more than the torso.
-      g.drawImage(im, 0, split, w, lower, pad + stride * 2, pad + split - lift, w, lower);
-    } else {
-      // Front/back walk: split lower half to suggest alternating steps.
-      const half = Math.floor(w / 2);
-      g.drawImage(im, 0, split, half, lower, pad - stride, pad + split + (stride > 0 ? 1 : 0), half, lower);
-      g.drawImage(im, half, split, w - half, lower, pad + half + stride, pad + split + (stride < 0 ? 1 : 0), w - half, lower);
-    }
-    return c;
-  }
-
-  function buildWalkFrames() {
-    for (const key of REQUIRED.filter(key => !key.endsWith('_cast'))) {
-      const im = images.get(key);
-      if (!im?.naturalWidth) continue;
-      const dir = key.endsWith('_side') ? 'side' : 'frontback';
-      walkFrames.set(key, [0,1,2,3].map(phase => makeWalkFrame(im, dir, phase)));
     }
   }
 
@@ -109,46 +70,66 @@
     return { im: images.get(pose.key) || images.get(`${classKey(p.job)}_front`), flip: pose.flip };
   }
 
-  function drawImageCentered(im, p, opts = {}) {
+  function drawImageGrounded(im, p, opts = {}) {
     if (!im?.naturalWidth) return false;
-    const h = (opts.height || spriteHeight(p.job)) * (opts.scale || 1);
+
+    const baseH = opts.height || spriteHeight(p.job);
+    const scale = opts.scale || 1;
+    const scaleX = opts.scaleX ?? 1;
+    const scaleY = opts.scaleY ?? 1;
+    const h = baseH * scale;
     const w = im.naturalWidth * (h / im.naturalHeight);
+
     ctx.save();
     ctx.imageSmoothingEnabled = false;
     if (p.flashUntil > now) {
       ctx.globalAlpha = .78;
       ctx.filter = 'brightness(1.7) saturate(.82)';
     }
-    ctx.translate(Math.round(p.x + (opts.x || 0)), Math.round(p.y + p.radius + 12 + (opts.y || 0)));
+
+    // Anchor every state by the bottom of the original sprite so shoes never disappear or jump.
+    ctx.translate(
+      Math.round(p.x + (opts.x || 0)),
+      Math.round(groundY(p) + (opts.y || 0))
+    );
     if (opts.rotate) ctx.rotate(opts.rotate);
-    if (opts.flip) ctx.scale(-1, 1);
-    ctx.drawImage(im, Math.round(-w/2), Math.round(-h), Math.round(w), Math.round(h));
+    ctx.scale((opts.flip ? -1 : 1) * scaleX, scaleY);
+    ctx.drawImage(im, Math.round(-w / 2), Math.round(-h), Math.round(w), Math.round(h));
     ctx.restore();
     return true;
   }
 
   function drawWalk(p) {
     const pose = basePose(p);
-    const frames = walkFrames.get(pose.key);
-    const phase = Math.floor(now / 115) % 4;
-    const im = frames?.[phase] || images.get(pose.key);
+    const im = images.get(pose.key);
     if (!im) return false;
-    const stride = [0,1,0,-1][phase];
-    const bob = [0,-2,0,-1][phase];
-    return drawImageCentered(im, p, {
+
+    // Four non-destructive phases. The complete PNG moves as one piece.
+    const phase = Math.floor(now / 120) % 4;
+    const sway = [0, -1, 0, 1][phase];
+    const bob = [0, -2, 0, -1][phase];
+    const squashY = [1, .986, 1, .992][phase];
+    const spreadX = [1, 1.012, 1, .994][phase];
+    const sideLean = p.dir === 'left' || p.dir === 'right' ? sway * .009 : sway * .004;
+
+    return drawImageGrounded(im, p, {
       flip:pose.flip,
-      x:stride * .45,
+      x:sway * .55,
       y:bob,
-      rotate:stride * .006,
-      height:spriteHeight(p.job)
+      rotate:sideLean,
+      scaleX:spreadX,
+      scaleY:squashY
     });
   }
 
   function drawIdle(p) {
     const pose = basePose(p);
-    return drawImageCentered(images.get(pose.key), p, {
+    const breathe = Math.sin(now / 520);
+    return drawImageGrounded(images.get(pose.key), p, {
       flip:pose.flip,
-      y:Math.sin(now / 520) * .35
+      y:breathe * .35,
+      scaleX:1 - breathe * .002,
+      scaleY:1 + breathe * .002
     });
   }
 
@@ -160,7 +141,7 @@
     const kick = Math.sin((1 - t) * Math.PI) * 3;
     const dx = p.dir === 'right' ? kick : p.dir === 'left' ? -kick : 0;
     const dy = p.dir === 'up' ? -kick * .45 : p.dir === 'down' ? kick * .35 : 0;
-    return drawImageCentered(im, p, {
+    return drawImageGrounded(im, p, {
       flip:pose.flip,
       x:dx,
       y:dy,
@@ -177,14 +158,18 @@
     ctx.strokeStyle = color;
     ctx.lineWidth = 1.25;
     ctx.beginPath();
-    ctx.ellipse(p.x, p.y + 8, 19 + phase * 1.4, 7 + phase * .6, 0, 0, TAU);
+    ctx.ellipse(p.x, groundY(p) - 3, 19 + phase * 1.4, 7 + phase * .6, 0, 0, TAU);
     ctx.stroke();
     for (let i = 0; i < 4; i++) {
       const a = i / 4 * TAU + now / 360;
       const rr = 22 + 2 * pulse;
       ctx.globalAlpha = .25;
       ctx.fillStyle = color;
-      ctx.fillRect(Math.round(p.x + Math.cos(a) * rr - 1.5), Math.round(p.y - 18 + Math.sin(a) * rr * .48 - rise - 1.5), 3, 3);
+      ctx.fillRect(
+        Math.round(p.x + Math.cos(a) * rr - 1.5),
+        Math.round(p.y - 18 + Math.sin(a) * rr * .48 - rise - 1.5),
+        3, 3
+      );
     }
     ctx.restore();
   }
@@ -195,21 +180,30 @@
     const safe = safeClassImage(p);
     const im = castImage?.naturalWidth ? castImage : safe.im;
     if (!im) return false;
+
     const phase = Math.floor(now / 105) % 4;
-    const pulse = [.99, 1.015, 1.025, 1.005][phase];
+    const pulse = [.995, 1.012, 1.022, 1.006][phase];
     const lift = [0, -2, -4, -2][phase];
     const flip = p.dir === 'left';
-    const ok = drawImageCentered(im, p, { flip, scale:pulse, y:lift, height:spriteHeight(p.job) + 4 });
+    const ok = drawImageGrounded(im, p, {
+      flip,
+      scale:pulse,
+      y:lift,
+      height:spriteHeight(p.job) + 3
+    });
     drawCastAura(p, phase, skillColor(p.castSkill));
     return ok;
   }
 
   function drawCharacter(p) {
+    const floor = groundY(p);
+
+    // Shadow now follows the actual foot anchor instead of sitting under the torso.
     ctx.save();
-    ctx.globalAlpha = .16;
+    ctx.globalAlpha = .18;
     ctx.fillStyle = '#232027';
     ctx.beginPath();
-    ctx.ellipse(p.x, p.y + 11, p.job === 'Sumo Sacerdote' ? 20 : 18, 6, 0, 0, TAU);
+    ctx.ellipse(floor ? p.x : p.x, floor + 1, p.job === 'Sumo Sacerdote' ? 19 : 17, 5, 0, 0, TAU);
     ctx.fill();
     ctx.restore();
 
@@ -223,23 +217,23 @@
       else ok = drawIdle(p);
     }
 
-    // Never render the old procedural body or a glowing orb once v11.1 is active.
     if (!ok) {
       const safe = safeClassImage(p);
-      if (safe.im) drawImageCentered(safe.im, p, { flip:safe.flip });
+      if (safe.im) drawImageGrounded(safe.im, p, { flip:safe.flip });
     }
 
+    // Labels stay below the shoes; they no longer cover the feet/robe hem.
     ctx.textAlign = 'center';
     ctx.fillStyle = '#fff';
     ctx.font = '700 10px sans-serif';
-    ctx.fillText(p.name || 'Aventureiro', p.x, p.y + 35);
+    ctx.fillText(p.name || 'Aventureiro', p.x, floor + 15);
     ctx.fillStyle = '#ddd5d5';
     ctx.font = '9px sans-serif';
-    ctx.fillText(`${p.job || 'Noviço'} • Nv. ${p.level || 1}`, p.x, p.y + 47);
+    ctx.fillText(`${p.job || 'Noviço'} • Nv. ${p.level || 1}`, p.x, floor + 27);
   }
 
   function installCastTracker() {
-    if (cast.__roweb111Tracked) return;
+    if (cast.__roweb112Tracked) return;
     const baseCast = cast;
     const tracked = function(name) {
       const before = player.castingUntil;
@@ -249,7 +243,7 @@
         player.castAnimStart = now;
       }
     };
-    tracked.__roweb111Tracked = true;
+    tracked.__roweb112Tracked = true;
     cast = tracked;
   }
 
