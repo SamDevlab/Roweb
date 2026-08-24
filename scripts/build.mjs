@@ -9,21 +9,25 @@ const dist = resolve(root, 'dist');
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 
-await Promise.all([
-  cp(resolve(root, 'index.html'), resolve(dist, 'index.html')),
-  cp(resolve(root, 'styles.css'), resolve(dist, 'styles.css')),
-  cp(resolve(root, 'src', 'game.js'), resolve(dist, 'game.js')),
-  cp(resolve(root, 'src', 'roweb2.js'), resolve(dist, 'roweb2.js')),
-  cp(resolve(root, 'src', 'roweb3.js'), resolve(dist, 'roweb3.js')),
-  cp(resolve(root, 'src', 'roweb3-ui-hotfix.js'), resolve(dist, 'roweb3-ui-hotfix.js')),
-  cp(resolve(root, 'src', 'roweb6-art.js'), resolve(dist, 'roweb6-art.js')),
-  cp(resolve(root, 'src', 'roweb7-art.js'), resolve(dist, 'roweb7-art.js')),
-  cp(resolve(root, 'src', 'roweb8-player-fix.js'), resolve(dist, 'roweb8-player-fix.js')),
-  cp(resolve(root, 'src', 'roweb9-novice-data.js'), resolve(dist, 'roweb9-novice-data.js')),
-  cp(resolve(root, 'src', 'roweb9-priest-data.js'), resolve(dist, 'roweb9-priest-data.js')),
-  cp(resolve(root, 'src', 'roweb9-high-data.js'), resolve(dist, 'roweb9-high-data.js')),
-  cp(resolve(root, 'src', 'roweb6-gameplay.js'), resolve(dist, 'roweb6-gameplay.js')),
-  cp(resolve(root, 'src', 'roweb11-character-animation.js'), resolve(dist, 'roweb11-character-animation.js'))
-]);
+const files = [
+  ['index.html', 'index.html'],
+  ['styles.css', 'styles.css'],
+  ['src/game.js', 'game.js'],
+  ['src/roweb2.js', 'roweb2.js'],
+  ['src/roweb3.js', 'roweb3.js'],
+  ['src/roweb3-ui-hotfix.js', 'roweb3-ui-hotfix.js'],
+  ['src/roweb6-art.js', 'roweb6-art.js'],
+  ['src/roweb7-art.js', 'roweb7-art.js'],
+  ['src/roweb8-player-fix.js', 'roweb8-player-fix.js'],
+  ['src/roweb6-gameplay.js', 'roweb6-gameplay.js'],
+  ...Array.from({ length: 12 }, (_, i) => {
+    const n = String(i + 1).padStart(2, '0');
+    return [`src/roweb12-atlas-part${n}.js`, `roweb12-atlas-part${n}.js`];
+  }),
+  ['src/roweb12-atlas-loader.js', 'roweb12-atlas-loader.js'],
+  ['src/roweb12-character-sprites.js', 'roweb12-character-sprites.js']
+];
 
-console.log('Roweb static build ready: animated concept-sheet character + v10 world + v6 gameplay.');
+await Promise.all(files.map(([source, target]) => cp(resolve(root, source), resolve(dist, target))));
+
+console.log('Roweb static build ready: v12 full Aster spritesheet + gameplay/world layers.');
