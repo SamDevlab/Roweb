@@ -22,7 +22,8 @@ await Promise.all([
   cp(resolve(root, 'src', 'roweb9-novice-data.js'), resolve(dist, 'roweb9-novice-data.js')),
   cp(resolve(root, 'src', 'roweb9-priest-data.js'), resolve(dist, 'roweb9-priest-data.js')),
   cp(resolve(root, 'src', 'roweb9-high-data.js'), resolve(dist, 'roweb9-high-data.js')),
-  cp(resolve(root, 'src', 'roweb6-gameplay.js'), resolve(dist, 'roweb6-gameplay.js'))
+  cp(resolve(root, 'src', 'roweb6-gameplay.js'), resolve(dist, 'roweb6-gameplay.js')),
+  cp(resolve(root, 'src', 'roweb11-character-animation.js'), resolve(dist, 'roweb11-character-animation.js'))
 ]);
 
-console.log('Roweb static build ready: concept-sheet player sprites + v7 map + v6 gameplay.');
+console.log('Roweb static build ready: animated concept-sheet character + v10 world + v6 gameplay.');
