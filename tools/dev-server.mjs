@@ -32,7 +32,8 @@ function safePath(urlPath) {
     '/roweb9-novice-data.js': '/src/roweb9-novice-data.js',
     '/roweb9-priest-data.js': '/src/roweb9-priest-data.js',
     '/roweb9-high-data.js': '/src/roweb9-high-data.js',
-    '/roweb6-gameplay.js': '/src/roweb6-gameplay.js'
+    '/roweb6-gameplay.js': '/src/roweb6-gameplay.js',
+    '/roweb11-character-animation.js': '/src/roweb11-character-animation.js'
   };
   const requested = aliases[clean] || clean;
   const rel = normalize(requested).replace(/^([/\\])+/, '');
