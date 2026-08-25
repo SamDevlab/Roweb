@@ -36,10 +36,11 @@ const files = [
   ['src/v14/world-data.js', 'v14/world-data.js'],
   ['src/roweb14-graphics.js', 'roweb14-graphics.js'],
   ['src/roweb15-graphics.js', 'roweb15-graphics.js'],
-  ['src/roweb16-graphics.js', 'roweb16-graphics.js']
+  ['src/roweb16-graphics.js', 'roweb16-graphics.js'],
+  ['src/roweb17-terrain.js', 'roweb17-terrain.js']
 ];
 
 await mkdir(resolve(dist, 'v14'), { recursive: true });
 await Promise.all(files.map(([source, target]) => cp(resolve(root, source), resolve(dist, target))));
 
-console.log('Roweb static build ready: v16 stable world/mobs + v13 RPG loop + untouched Aster v12.3.');
+console.log('Roweb static build ready: v17 semantic terrain + v16 stable world/mobs + v13 RPG loop + untouched Aster v12.3.');
