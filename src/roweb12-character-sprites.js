@@ -1,14 +1,14 @@
-// Roweb v12 character renderer.
-// Uses the approved 5x8 transparent spritesheet for every Aster visual state.
+// Roweb v12.3 character renderer.
+// Uses the compact clean 5x8 WebP spritesheet for every Aster visual state.
 (() => {
   const previousDrawPlayer = drawPlayer;
   const sheet = new Image();
   sheet.decoding = 'async';
   let ready = false;
 
-  const FRAME_W = 105;
-  const FRAME_H = 112;
-  const DRAW_H = 98;
+  const FRAME_W = 64;
+  const FRAME_H = 64;
+  const DRAW_H = 88;
 
   const cell = (r, c) => ({ r, c });
   const frames = {
@@ -151,18 +151,18 @@
   }
 
   sheet.onload = () => {
-    ready = sheet.naturalWidth === 525 && sheet.naturalHeight === 896;
+    ready = sheet.naturalWidth === 320 && sheet.naturalHeight === 512;
     if (!ready) {
-      console.error('Aster v12 sheet dimensions invalid', sheet.naturalWidth, sheet.naturalHeight);
+      console.error('Aster v12.3 sheet dimensions invalid', sheet.naturalWidth, sheet.naturalHeight);
       return;
     }
     installCastTracker();
     drawPlayer = drawCharacter;
-    log('Aster v12 ativo: nova spritesheet completa com idle, corrida, conjuração e ataque.','good');
+    log('Aster v12.3 ativo: sprites limpos com idle, corrida, conjuração e ataque.','good');
   };
   sheet.onerror = err => {
-    console.error('Falha ao carregar spritesheet Aster v12', err);
-    log('Falha ao carregar Aster v12; mantendo o personagem anterior.');
+    console.error('Falha ao carregar spritesheet Aster v12.3', err);
+    log('Falha ao carregar Aster v12.3; mantendo o personagem anterior.');
   };
   sheet.src = window.ROWEB12_SPRITE_SHEET || '';
 })();
