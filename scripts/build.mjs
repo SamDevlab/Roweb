@@ -28,9 +28,16 @@ const files = [
     return [`src/roweb12-atlas-part${n}.js`, `roweb12-atlas-part${n}.js`];
   }),
   ['src/roweb12-atlas-loader.js', 'roweb12-atlas-loader.js'],
-  ['src/roweb12-character-sprites.js', 'roweb12-character-sprites.js']
+  ['src/roweb12-character-sprites.js', 'roweb12-character-sprites.js'],
+  ['src/v14/poring-data.js', 'v14/poring-data.js'],
+  ['src/v14/bat-data.js', 'v14/bat-data.js'],
+  ['src/v14/eye-data.js', 'v14/eye-data.js'],
+  ['src/v14/imp-data.js', 'v14/imp-data.js'],
+  ['src/v14/world-data.js', 'v14/world-data.js'],
+  ['src/roweb14-graphics.js', 'roweb14-graphics.js']
 ];
 
+await mkdir(resolve(dist, 'v14'), { recursive: true });
 await Promise.all(files.map(([source, target]) => cp(resolve(root, source), resolve(dist, target))));
 
-console.log('Roweb static build ready: v13 runtime + loot/inventory/equipment + v12.3 character sprites.');
+console.log('Roweb static build ready: v14 pixel-art world/mobs + v13 RPG loop + v12.3 Aster.');
