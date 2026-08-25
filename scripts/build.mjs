@@ -12,6 +12,7 @@ await mkdir(dist, { recursive: true });
 const files = [
   ['index.html', 'index.html'],
   ['styles.css', 'styles.css'],
+  ['rpg.css', 'rpg.css'],
   ['src/game.js', 'game.js'],
   ['src/roweb2.js', 'roweb2.js'],
   ['src/roweb3.js', 'roweb3.js'],
@@ -20,6 +21,8 @@ const files = [
   ['src/roweb7-art.js', 'roweb7-art.js'],
   ['src/roweb8-player-fix.js', 'roweb8-player-fix.js'],
   ['src/roweb6-gameplay.js', 'roweb6-gameplay.js'],
+  ['src/roweb13-core.js', 'roweb13-core.js'],
+  ['src/roweb13-rpg.js', 'roweb13-rpg.js'],
   ...Array.from({ length: 12 }, (_, i) => {
     const n = String(i + 1).padStart(2, '0');
     return [`src/roweb12-atlas-part${n}.js`, `roweb12-atlas-part${n}.js`];
@@ -30,4 +33,4 @@ const files = [
 
 await Promise.all(files.map(([source, target]) => cp(resolve(root, source), resolve(dist, target))));
 
-console.log('Roweb static build ready: v12 full Aster spritesheet + gameplay/world layers.');
+console.log('Roweb static build ready: v13 runtime + loot/inventory/equipment + v12.3 character sprites.');
