@@ -1,13 +1,13 @@
 {
   "name": "roweb",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "private": true,
   "type": "module",
-  "description": "MMORPG web prototype with animated cleric sprites, weather, attributes, drops, inventory and equipment.",
+  "description": "MMORPG web prototype with cohesive pixel-art world, animated demons, cleric sprites, weather, attributes, drops, inventory and equipment.",
   "scripts": {
     "dev": "node tools/dev-server.mjs",
     "build": "npm run check && node scripts/build.mjs",
-    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check src/roweb2.js && node --check src/roweb3.js && node --check src/roweb3-ui-hotfix.js && node --check src/roweb6-art.js && node --check src/roweb7-art.js && node --check src/roweb8-player-fix.js && node --check src/roweb6-gameplay.js && node --check src/roweb13-core.js && node --check src/roweb13-rpg.js && node --check src/roweb12-atlas-part01.js && node --check src/roweb12-atlas-part02.js && node --check src/roweb12-atlas-part03.js && node --check src/roweb12-atlas-part04.js && node --check src/roweb12-atlas-part05.js && node --check src/roweb12-atlas-part06.js && node --check src/roweb12-atlas-part07.js && node --check src/roweb12-atlas-part08.js && node --check src/roweb12-atlas-part09.js && node --check src/roweb12-atlas-part10.js && node --check src/roweb12-atlas-part11.js && node --check src/roweb12-atlas-part12.js && node --check src/roweb12-atlas-loader.js && node --check src/roweb12-character-sprites.js && node --check scripts/build.mjs"
+    "check": "node --check tools/dev-server.mjs && node --check src/game.js && node --check src/roweb2.js && node --check src/roweb3.js && node --check src/roweb3-ui-hotfix.js && node --check src/roweb6-art.js && node --check src/roweb7-art.js && node --check src/roweb8-player-fix.js && node --check src/roweb6-gameplay.js && node --check src/roweb13-core.js && node --check src/roweb13-rpg.js && node --check src/roweb12-atlas-part01.js && node --check src/roweb12-atlas-part02.js && node --check src/roweb12-atlas-part03.js && node --check src/roweb12-atlas-part04.js && node --check src/roweb12-atlas-part05.js && node --check src/roweb12-atlas-part06.js && node --check src/roweb12-atlas-part07.js && node --check src/roweb12-atlas-part08.js && node --check src/roweb12-atlas-part09.js && node --check src/roweb12-atlas-part10.js && node --check src/roweb12-atlas-part11.js && node --check src/roweb12-atlas-part12.js && node --check src/roweb12-atlas-loader.js && node --check src/roweb12-character-sprites.js && node --check src/v14/poring-data.js && node --check src/v14/bat-data.js && node --check src/v14/eye-data.js && node --check src/v14/imp-data.js && node --check src/v14/world-data.js && node --check src/roweb14-graphics.js && node --check scripts/build.mjs"
   },
   "engines": {
     "node": ">=18"
