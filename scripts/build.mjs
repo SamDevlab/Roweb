@@ -41,6 +41,7 @@ const files = [
   ['src/roweb18-graphics.js', 'roweb18-graphics.js'],
   ['src/roweb19-world-layout.js', 'roweb19-world-layout.js'],
   ['src/roweb20-cathedral.js', 'roweb20-cathedral.js'],
+  ['src/roweb21-cathedral-dungeon.js', 'roweb21-cathedral-dungeon.js'],
   ['assets/v18/mobs.webp', 'assets/v18/mobs.webp'],
   ['assets/v18/world.webp', 'assets/v18/world.webp'],
   ['assets/v20/cathedral-0.webp', 'assets/v20/cathedral-0.webp'],
@@ -54,4 +55,4 @@ await mkdir(resolve(dist, 'assets/v18'), { recursive: true });
 await mkdir(resolve(dist, 'assets/v20'), { recursive: true });
 await Promise.all(files.map(([source, target]) => cp(resolve(root, source), resolve(dist, target))));
 
-console.log('Roweb static build ready: v20 animated cathedral + interior map + v19 authored valley + untouched Aster.');
+console.log('Roweb static build ready: v21 Cathedral dungeon + v20 animated entrance + v19 authored valley + untouched Aster.');
