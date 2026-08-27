@@ -47,6 +47,7 @@ const files = [
   ['src/roweb24-graphics-stability.js', 'roweb24-graphics-stability.js'],
   ['src/roweb25-spawn-mob-texture.js', 'roweb25-spawn-mob-texture.js'],
   ['src/roweb26-mob-animation.js', 'roweb26-mob-animation.js'],
+  ['src/roweb27-mob-pose-separation.js', 'roweb27-mob-pose-separation.js'],
   ['assets/v18/mobs.webp', 'assets/v18/mobs.webp'],
   ['assets/v18/world.webp', 'assets/v18/world.webp'],
   ['assets/v20/cathedral-0.webp', 'assets/v20/cathedral-0.webp'],
@@ -60,4 +61,4 @@ await mkdir(resolve(dist, 'assets/v18'), { recursive: true });
 await mkdir(resolve(dist, 'assets/v20'), { recursive: true });
 await Promise.all(files.map(([source, target]) => cp(resolve(root, source), resolve(dist, target))));
 
-console.log('Roweb static build ready: v26 curated mob animations + v25 safe spawn + v24 graphics + Cathedral dungeon/boss + untouched Aster.');
+console.log('Roweb static build ready: v27 pose-atlas mob stabilization + separation + v26 animation controller + untouched Aster.');
