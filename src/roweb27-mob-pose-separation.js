@@ -68,8 +68,6 @@
     if (!positionFree(m, nx, ny)) return false;
     m.x = nx;
     m.y = ny;
-    if (Number.isFinite(m.targetX)) m.targetX += dx;
-    if (Number.isFinite(m.targetY)) m.targetY += dy;
     return true;
   }
 
@@ -83,8 +81,10 @@
         for (let j = i + 1; j < list.length; j++) {
           const b = list[j];
           if (b.boss) continue;
+          const visualA = VISUAL_SPACING[a.type] || 62;
+          const visualB = VISUAL_SPACING[b.type] || 62;
           const desired = Math.max(
-            (VISUAL_SPACING[a.type] || 62 + VISUAL_SPACING[b.type] || 62) / 2,
+            (visualA + visualB) / 2,
             (a.radius || 18) + (b.radius || 18) + 8
           );
           let dx = b.x - a.x;
@@ -92,7 +92,7 @@
           let dist = Math.hypot(dx, dy);
           if (dist >= desired) continue;
           if (dist < 0.001) {
-            const seed = ((a.id || 1) * 31 + (b.id || 1) * 17) % 360;
+            const seed = (((a.id || 1) * 31 + (b.id || 1) * 17) % 360) * Math.PI / 180;
             dx = Math.cos(seed);
             dy = Math.sin(seed);
             dist = 1;
